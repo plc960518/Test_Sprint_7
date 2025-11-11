@@ -2,24 +2,35 @@ import streamlit as st
 import pandas as pd
 import plotly_express as px
 
-car_data = pd.read_csv('vehicles_us.csv')
-hist_button = st.button('Construir histograma')  # crear un botón
+wine_data = pd.read_csv('wine_qt.csv')
 
+st.title("Análisis: Calidad del vino")
+st.write("Visualizaciones básicas del dataset de vinos.")
+
+# Histogram of quality
+st.header("Distribución de la calidad del vino")
+hist_button = st.button('Construir histograma')
 if hist_button:
-    # al hacer clic en el botón escribir un mensaje
-    st.write(
-        'Creación de un histograma para el conjunto de datos de anuncios de venta de coches')
+    st.write("Histograma creado")
+    fig1 = px.histogram(wine_data, x="quality", nbins=10,
+                        color_discrete_sequence=["#EC90EC"], title="Fig1: Calidad del vino")
+    st.plotly_chart(fig1, use_container_width=True)
 
-    # crear un histograma
-    fig = px.histogram(car_data, x="odometer")
+# Crear casillas de verificación para los gráficos de dispersión
+build_scatter1 = st.checkbox(
+    'Construir gráfico de dispersión: Alcohol vs Calidad')
+build_scatter2 = st.checkbox(
+    'Construir gráfico de dispersión: Acidez Volátil vs Calidad')
+# Scatter: alcohol vs quality
+if build_scatter1:
+    st.write("Relación entre Alcohol y Calidad")
+    fig2 = px.scatter(wine_data, x="alcohol", y="quality", trendline="ols",
+                      title="Fig2: Los vinos con mayor graduación alcohólica tienden a ser evaluados con mayor calidad.")
+    st.plotly_chart(fig2, use_container_width=True)
 
-    # mostrar un gráfico Plotly interactivo
-    st.plotly_chart(fig, use_container_width=True)
-
-if scat_button:
-    st.write(
-        'Creación de un gráfico de dispersión')
-
-    # crear un gráfico de dispersión
-    fig_2 = px.scatter(car_data, x="odometer", y="price")
-    st.plotly_chart(fig_2, )
+# Scatter: volatile acidity vs quality
+if build_scatter2:
+    st.write("Relación entre Acidez Volátil y Calidad")
+    fig3 = px.scatter(wine_data, x="volatile acidity", y="quality", trendline="ols",
+                      title="Fig3: A mayor acidez volátil, menor calidad")
+    st.plotly_chart(fig3, use_container_width=True)
