@@ -6,6 +6,7 @@ wine_data = pd.read_csv('wine_qt.csv')
 
 st.title("Análisis: Calidad del vino")
 st.write("Visualizaciones básicas del dataset de vinos.")
+st.image("C:\Users\Paulina\OneDrive\Desktop\Bootcamp\Test_Sprint_7\Proyecto\ChatGPT_wineqt.png", caption="image1.wine", use_column_width=True)
 
 # Histogram of quality
 st.header("Distribución de la calidad del vino")
